@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网页中使用es6模块</title>
+</head>
+<body>
+    <div>
+        由于 模块脚本涉及跨源加载，所以不能子啊开发模式下使用 file:URL 来测试 ES6 模块。
+        测试需要启动一个 web 服务。
+    </div>
+    <div>
+        可以使用 http-server，使用 npm 全局安装好之后在目录下运行命令: hs -o -p 1234
+        其中 “-o” 表示自动运行浏览器并打开网页， “-p 1234” 表示将端口设置为1234
+    </div>
+
+    <p>
+        学习 ES6 模块，导入和导出写法。
+        ES2020 import() 动态导入模块
+    </p>
+</body>
+<script type="module" src="./js/import.js"></script>
+</html>
