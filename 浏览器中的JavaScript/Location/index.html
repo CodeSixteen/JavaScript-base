@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location</title>
+</head>
+
+<body>
+    <a></a>
+    <button onclick="clickM">全屏</button>
+    <div id="box" style="height: 100%; width: 100%;" >asdasdasd</div>
+</body>
+<script>
+    const cation = location
+    console.log(location)
+
+    const url = new URL(cation)
+    search = url.searchParams
+    search.set('sc', '123')
+    console.log(url.search)
+    //    cation.search = url.search
+    console.log(history)
+    function clickM() {
+        const box = document.getElementById('box')
+        box.requestFullscreen()
+          .then(res => {
+              console.log(res)
+          })
+          .catch(e => {
+              console.log(e)
+          })
+    }
+</script>
+
+</html>

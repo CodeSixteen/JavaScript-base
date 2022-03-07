@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #transform {
+            transition: transform .5s;
+        }
+
+        .old {
+            transform: translateX(0);
+        }
+
+        .new {
+            transform: translateX(90%);
+        }
+        .clickTo{
+            color: blue;
+            padding: 0 16px;
+        }
+        .clickTo:hover{
+            color: blueviolet;
+        }
+        .clickTo:active{
+            background-color: #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>顶部</h2>
+    <div id="div" class="a b">
+        <ul class="ul cc">
+            <li name="li">
+                item
+            </li>
+        </ul>
+        <div></div>
+        <ul>
+            <li>的</li>
+        </ul>
+    </div>
+
+    <form action="http://192.168.2.1:123" method="get" id="edit">
+        <input name="user" type="text" required>
+        <input type="button" value="提交">
+        <input type="number">
+        <label>这是label</label>
+    </form>
+
+    <!-- 过渡 -->
+
+    <div id="transform" class="old">transform</div>
+    <button id="toggle">左右移动</button>
+    <h2>标题1</h2>
+
+    <div style="height: 2000px;"></div>
+    <h2>标题2</h2>
+    <div style="height: 2000px;background: green;" class="scroll">我是那个元素</div>
+
+</body>
+<script>
+    const li = document.querySelector('li')
+    // 从 li 元素向上查找 classList 包含 cc 的元素
+    const el = li.closest('.cc')
+    // console.log(el.textContent)
+
+    const box = document.querySelector('#div')
+
+    // const res = box.childElementCount  // 元素的子元素个数
+    // const res = box.lastElementChild // 元素的最后一个子元素
+    // const res = box.firstElementChild // 元素的第一个子元素
+    // const res = box.previousElementSibling // 元素的上一个兄弟元素
+    const res = box.nextElementSibling // 元素的下一个兄的元素
+    console.log(res)
+
+    box.classList.add('c')
+    box.classList.remove('a')
+    box.classList.toggle('c')
+    box.classList.toggle('c')
+    console.log(box.classList)
+    box.style.backgroundColor = 'red'
+    box.style.color = 'white'
+    box.style.whiteSpace = 'pre-wrap' // 让 \n 可以正确的被渲染为换行显示,参考:https://developer.mozilla.org/zh-CN/docs/Web/CSS/white-space
+    box.textContent = `A、2  \n  B、5`
+
+    const text = '通过 insertAdjacentElement 插入的元素'
+    const elem = document.createElement('div')
+    elem.textContent = text
+    // box.insertAdjacentElement('beforeBegin', elem)
+
+    // box.insertAdjacentElement('afterBegin', elem.cloneNode(true))
+
+    // box.insertAdjacentElement('beforeEnd', elem.cloneNode(true))
+
+    // box.insertAdjacentElement('afterEnd', elem.cloneNode(true))
+
+    // box.append('append', '可以有多个参数')
+    // box.prepend('prepend')
+    // box.after('还有我 after')
+    // box.before('我before也可以')
+    const p = document.createElement('p')
+    p.textContent = 'appendChild'
+    box.appendChild(p) // 在最后添加子元素
+    // 在最前面添加子元素 可以使用 box.insertAdjacentElement('afterBegin', elem)
+    box.insertAdjacentElement('afterBegin', p.cloneNode(true))
+    const html = '<p>我是一个段落</p>'
+    box.insertAdjacentHTML('afterBegin', html)
+
+    // box.remove() // 删除自己,够狠
+
+    console.log(box.getBoundingClientRect())
+
+    // 如果 el 被包含在一个 HTML 列表内则返回 true
+    function insideList(el, selectorList) {
+        return el.closest(selectorList) !== null
+    }
+
+    // 如果el 是一个HTML标题元素就返回true
+    function isHeading(el) {
+        return el.matches('h1,h2,h3,h4,h5,h6')
+    }
+
+    // form
+    const btnEl = document.querySelector('input[type=button]')
+    btnEl.addEventListener('click', (e) => {
+        document.forms.edit.submit()
+        // console.log(document.forms.edit.submit())
+    })
+
+
+    const transEl = document.querySelector('#transform')
+    const btn = document.querySelector('#toggle')
+    btn.onclick = function () {
+        transEl.classList.toggle('new')
+    }
+
+
+    // scrollTo({
+    //     left: 0,
+    //     top: 2000,
+    //     behavior: "smooth"
+    // })
+
+    // const scrollEl = document.querySelector('.scroll')
+    // scrollEl.scrollIntoView({
+    //     behavior: "smooth"
+    // })
+
+    const h2List = document.querySelectorAll('h2')
+
+    const navBox = document.createElement('div')
+    navBox.style.position = 'fixed'
+    navBox.style.right = 0
+    navBox.style.top = '50px'
+    let content = ''
+    for (const el of h2List) {
+        content += `<p class="clickTo">${el.textContent}<p>`
+    }
+    navBox.innerHTML = content
+    navBox.style.backgroundColor = 'white'
+    navBox.style.border = '1px solid #eee'
+    navBox.style.cursor = 'pointer'
+
+    document.body.appendChild(navBox)
+
+    document.onclick = e => {
+        if (e.target.className === 'clickTo') {
+            for (const l of h2List) {
+                if (l.textContent === e.target.textContent) {
+                    l.scrollIntoView({
+                        behavior: "smooth"
+                    })
+
+                }
+            }
+        }
+    }
+
+
+</script>
+
+</html>
